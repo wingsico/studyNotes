@@ -1,0 +1,213 @@
+#
+将getDay()转换成星期几：
+不用switch(){},而是用一个数组存储 weekday = ['星期一','星期二',...,'星期天']
+
+#
+indexOf() 搜索第二个字符
+str.indexOf('o',str.indexOf('o')+1)
+indexOf()有第二个可选参数，是用来规定开始检索的位置
+
+#
+split() 将字符串分割为数组
+有一个必选参数以及一个可选参数
+str.split('.') 以'.'来分割字符串
+str.split('.',3) 分割3次，即分割后数组长度为3
+
+#
+substring(start,stop) 取得start,stop 索引之间的字符串，是左闭右开区间
+即 var str = 'hello world!'
+  str.substring(0,3) // 'hel' 即字符串的长度应为 stop - start
+如果参数 start 与 stop 相等，那么该方法返回的就是一个空串（即长度为 0 的字符串）。
+如果 start 比 stop 大，那么该方法在提取子串之前会先交换这两个参数。
+
+#
+substr(start,length) start 起点 length截取字符串的长度 
+start 可以为负值，-1代表倒数第一个数 -2 代表倒数第二个数
+若start 为负值且绝对值超过了字符串长度，则自动取 start = 0;
+若start 为正值且绝对值超过了字符串长度，则得空值 ''
+
+#
+Math.ceil()向上取整
+Math.floor()向下取整
+Math.round()四舍五入
+
+#
+数组方法
+concat() 连接两个或更多的数组并返回结果
+join() 把数组的所有元素放入一个字符串。元素通过指定的分隔符进行分隔
+pop() 出栈:删除并返回 [数组的最后一个元素]
+push() 堆栈:向数组的末尾添加一个或更多元素，并返回新的 [长度]
+reverse() 反转数组元素顺序 [改变自身数组]
+shift()删除并返回数组的第一个数 
+slice() 从每个已有的数组返回选定的元素 [不修改自身数组,返回子数组] [包括起始索引不包括结尾索引[
+sort() 对数组的元素进行排序
+splice() 删除元素，并向元素添加新元素
+toSource() 返回对象的源代码
+toString() 把数组转换成字符串并返回结果
+toLocalString() 把数组转换成本地数组并返回结果
+unshift() 向数组开头添加一个或更多元素，并返回新的 [长度]
+valueOf() 返回数组对象的原始值
+
+#
+sort(方法函数)
+如果不指定方法函数，则按unicode码排序
+若指定方法函数，则按方法函数所指定的排序方法排序
+ sort(sortNum); 
+ function sortNum(a,b){
+   return a - b;
+ } 
+配合使用
+原理：方法函数要比较两个值，然后返回一个用于说明这两个值的相对顺序的数字
+因此比较函数应有两个参数A ，B
+  若返回值<=-1，则表示 A 在排序后的序列中出现在 B 之前。
+  若返回值>-1 && <1，则表示 A 和 B 具有相同的排序顺序。
+  若返回值>=1，则表示 A 在排序后的序列中出现在 B 之后。
+
+#DOM 方法
+nodeName 返回一个字符串，其内容是给定节点的名字
+nodeType 返回一个证书，这个数值代表给定节点的类型
+nodeValue 返回给定节点的当前值
+childNodes 返回一个数组，这个数组由给定元素的节点的子节点构成
+firstChild 返回第一个子节点
+lastChild 返回最后一个子节点
+parentNode 返回一个给定节点的父节点
+nextSibling 返回给定节点的下一个子节点
+previousSibling 返回给定节点的上一个子节点
+
+#DOM操作
+[document方法]createElement(element) 创建一个新的元素节点
+[document方法]createTextNode() 创建一个包含着给定文本的新文本节点
+appendChild() 指定节点的最后一个子节点列表之后添加一个新的子节点
+insertBefore() 将一个给定节点插入到一个给定元素节点的给定子节点前面
+removeChild() 从一个给定元素中删除一个子节点
+replaceChild() 把一个给定元素力的一个子节点替换为另外一个节点
+
+#checkbox 
+javascript 控制复选框是否选中 
+elementNode.checked = true // true选中 false不选中
+
+#getAttribute()方法
+elementNode.getAttribute(name) 通过元素节点的属性名称获取属性的值
+ex: elementNode.getAttribute('id')
+
+#setAttribute()方法
+elementNode.setAttribute(name,value) 增加一个指定名称和值的新属性，或者把一个现有的属性设定为指定的值
+ex: elementNode.setAttribute('class','example')
+
+#nodeName  --只读 返回字符串且为大写
+元素节点的nodeName与标签名相同
+属性节点的nodeName是属性的名称
+文本节点的nodeName永远是#text
+文档节点的nodeName永远是#document
+
+#nodeValue
+元素节点的nodeValue 是undefined或Null
+文本节点的nodeValue 是文本本身
+属性节点的nodeValue 是属性的值
+
+#nodeType  --只读
+元素 - 1
+属性 - 2
+文本 - 3
+注释 - 8
+文档 - 9
+
+#childNodes (别把childNodes 写成 nodeChilds #我经常写错#)
+IE 和 主流浏览器chrome/firebox/opera表现不同
+节点之间的空白符在主流浏览器中为 文本节点
+
+#firstChild 
+node.firstChild 返回'childNodes'数组的第一个子节点，如果选定的节点没有子节点则该属性返回NULL
+与elementNode.childNodes[0]是同样的效果
+
+#lastChild
+node.lastChild 
+与elementNode.childNodes[elementNode.childNodes.length - 1]是同样的效果
+
+## 由于IE会忽略节点之间生成的空白文本节点，而其他浏览器不会。我们可以通过检测节点类型，过滤子节点
+
+#删除空白文本节点 removeChild()
+ex: for(var i = 0;i < node.length; i++){
+  if(node[i].nodeType === 3){
+     node[i].parentNode.removeChild(node[i])
+  }
+}
+
+#获取节点的值
+ex: 
+[html]
+<div>
+  <p>javascript</p>
+</div>
+[javascript] (已用上面的方法去除空白文本节点)
+var box = document.getElementsByTagName('div')[0]
+document.write(box.firstChild) // null
+document.write(box.firstChild.childNodes[0]) // [object Text]
+document.write(box.firstChild.childNOdes[0].nodeValue) // 'javascript'
+解释：box.firstChild 得到的节点是<p>javascript</p>,若要得到p里的值，还要访问<p>的子节点
+
+#parentNode
+elementNode.parentNode 获取指定节点的父节点 (只能有一个)
+elementNode.parentNode.parentNode 访问祖节点
+ps:时刻注意浏览器兼容问题
+
+#nextSibling
+nodeObject.nextSibling 可返回某个节点字后紧跟的节点(处于同一树层级中)
+如果没有此节点，则该属性返回null
+
+#previousSibling 
+nodeObject.previousSibling 返回某个节点之前紧跟着的节点(处于同一树层级总)
+
+ps: 注意两个属性获取的是节点(主流浏览器不会忽略空白文本节点，使用时尤其注意)
+解决方法: 判断节点nodeType 是否为1，如果不是元素节点就跳过
+function get_nextSibling(n){
+  var x = n.nextSibling
+  while ( x.nodeType != 1){
+    x = x.nextSibling;
+  }
+return x;
+}
+前一个节点方法类似
+
+#appendChild()
+appendChild(newNode) 在指定节点的最后一个子节点列表之后添加一个新的子节点
+
+#insertBefore()
+insertBefore(newNode,node) 在已有的子节点前插入一个新的子节点
+node:指定此节点前插入节点
+
+#removeChild()
+nodeObject.removeChild(node) 从子节点列表中删除某个节点，如果删除成功，此方法可反馈被删除的节点，如失败则返回NULL
+
+#replaceChild()
+node.replaceChild(newNode,oldNode) 实现子节点(对象)的替换。返回被替换对象的引用
+参数为： 替换原来的对象 和 被新的替换的对象
+
+#setAttribute() 其中设置class的属性不使用 className,而直接是class
+
+#浏览器窗口可视区域大小
+IE9以下的IE浏览器与主流浏览器有区别
+一、针对IE9/Firefox等主流浏览器
+ ~ window.innerHeight - 浏览器窗口的内部高度
+ ~ window.innerWidth - 浏览器窗口的内部宽度
+二、针对 IE8 以及 IE8以下的浏览器
+ ~ document.documentElement.clientHeight - HTML文档所在窗口的当前高度
+ ~ docume	nt.documentElement.clientWidth - HTML文档所在窗口的当前宽度
+或者
+ ~ document.body.clientHeight - body属性对应HTML文档的body标签
+
+解决方案:
+ var w = docuemnt.documentElement.clientWidth || document.body.clientWidth
+ var h = ...
+
+#网页尺寸 scrollHeight
+document.documentElement.scrollWidth
+
+#网页尺寸 offsetHeight
+offsetHeight 获取网页内容高度/宽度(包括滚动条等边线,会随着窗口的显示大小而改变)
+value: offsetHeight = clientHeight + 滚动条 + 边框
+
+#网页卷去的距离与偏移量
+
+scrollLeft 设置或获取位于给定对象左边界与窗口中目前课件内容的最左端之间的距离
+scrollTop 设置或获取位于给定对象
