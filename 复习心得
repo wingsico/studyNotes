@@ -211,3 +211,159 @@ value: offsetHeight = clientHeight + 滚动条 + 边框
 
 scrollLeft 设置或获取位于给定对象左边界与窗口中目前课件内容的最左端之间的距离
 scrollTop 设置或获取位于给定对象
+
+#typeof 适合基本类型的判断,返回一个字符串
+!遇到null失效
+typeof(undefined) // "undefined"
+typeof new OBject() // "object"
+typeof [1,2] // "object"
+typeof NaN // "number"
+typeof null // "object"
+typeof {} // "object"
+
+#instanceof 适合自定义对象，也可以用来检测原生对象
+不用来检测基本类型
+!在不同iframe 和 window间检测时失效
+obj instanceof Object
+[1,2] instanceof Array === true
+
+#
+Object.prototype.toString.apply([]) === "[object Array]"
+Object.prototype.toString.apply(window) === "[object Window]"
+
+#表达式
+原始表达式  -- 常量，直接量， 关键字 ， 变量
+初始化表达式  [1,2]初始化数组，{ x:1,y:2} 初始化对象
+函数表达式  var fe = function(){}; 或 (function(){})();
+属性访问表达式 object.name
+调用表达式  fe() 调用函数
+对象创建表达式  new Object; new 构造器
+
+#逗号运算符 ,
+var val = (1,2,3) 每个值都会被计算，取最右边的值
+
+#delete运算符
+删除某一个属性
+var obj = { x:1 }
+obj.x // 1
+delete obj.x
+obj.x // undefined
+
+#Object.defineProperty IE9及以上才能使用
+var obj = {}
+Object.defineProperty(obj,'x',{
+  configuarable: false, // 设置false后 该对象的x属性就不能被删除
+  value: 1
+}) 
+delete objx.x // false
+obj.x; // 1
+
+# in 运算符 判断对象里是否有一个这样的属性
+object.x = 1;
+x in object // true
+
+# obj.hasOwnProperty() 
+
+#void() 不管void(x)中x是什么，都返回一个undefined
+
+#没有块级作用域
+#有函数作用域
+
+#try catch finally
+try {
+  throw "test";
+} catch(ex) {
+  console.log(ex); // test
+} finally {
+  console.log('finally')
+}
+可以嵌套作用，如果内部的异常没有处理，抛给外面了，那么在外面处理之前，需要先处理内部的finally语句
+若内部的异常已经被处理，则外部的catch不再执行
+
+# for in 坑很多慎用
+var p;
+var obj = { x:1 , y:2}
+for(p in obj){}
+1.顺序不确定 具体顺序依赖于引擎的实现
+2.属性表述器中的enumerable标签为false时，不会遍历该属性
+3.for in 对象属性时受到原型链的影响 
+
+#with 不建议使用
+reason: 
+* 让JS引擎优化更难
+* 可读性差
+* 可被变量定义代替
+* 严格模式下被禁用
+
+#严格模式
+* arguments变为参数的静态副本
+  (function(a){
+    'use strict';
+    arguments[0]=100;
+    console.log(a); // 结果仍是1
+}(1));
+
+但是若传入的参数为一个对象:
+  (function(a){
+   'use strict';
+   arguments[0].x = 100;
+   console.log(a.x); // 对象的属性的值是可以改变的，为100
+}({x:1}));
+
+* delete参数、函数名报错
+* delete不可配置的属性报错
+* 对象字面量重复属性名报错
+* 禁止八进制字面量 
+  正常模式下 console.log(0123) 输出八进制数，也就是83
+  严格模式下 会抛出一个 SyntaxError
+* eval,arguments变为关键字，不可作为变量名、函数名等
+* 一般函数调用时（不是对象的方法调用，也不使用apply/call/bind等修改this)this指向null,而不是全局对象
+* 若使用apply/call，当传入null或undefined时，this将指向null 或 undefined，而不是全局变量
+* 试图修改不可写属性(writable=false),在不可扩展的对象上添加属性时报typeError，而不是忽略
+* arguments.caller,arguments.callee被禁用
+
+#对象的属性标签
+* writable
+* enumerable
+* configurable
+* value
+* get/set
+
+#对象标签
+* [[proto]]
+* [[class]]
+* [[extensible]]
+
+#Object.create(参数)
+var obj = Object.create({x:1}) 里面的参数通常是一个对象
+obj的原型__proto__就指向这个参数，换句话说，'x'这个属性从原型链上继承,也就是'x'这个属性存在于obj的原型链上
+obj.hasOwnProperty('x') // false
+
+#访问对象的属性
+var obj = {x1:1,x2:2}
+* obj.x1 // 1   ←一般来说首选.操作符
+* obj["x2"] // 2
+但是如果想要循环对象属性需要进行属性名的拼接的时候往往使用第二种
+如: var i = 1,n = 2;
+for(; i <= n; i++){ console.log(obj['x'+i] }
+或者是 for in 遍历属性的时候,使用方括号方法(注意可能把原型链上的属性遍历出来)
+
+#对象属性读写-是否存在
+巧用运算符
+var yz = obj && obj.y && obj.y.z 
+// 如果 obj 存在，则向右查找,如果 obj.y 也存在,则继续向右查找, 若 obj.y.z存在，则yz的值就是z的值，但是如果某一个 环节不存在，则yz的值就为 undefined
+
+#对象属性删除
+delete obj.name // 返回true 
+obj.name // undefined
+delete obj.name // 返回true
+这里的true不表示删除成功,而表示该对象中的属性已经不存在了
+有一些属性是不能删除的 如对象的原型不能被删除(由于每个对象属性含有的标签来控制它的权限)
+delete Object.prototype; // false 
+
+#获取对象属性中所有的标签
+var descriptor = Object.getOwnPropertyDescriptor(Object,'prototype')
+它有两个参数，Object是你要查看的对象的名称, 'prototype'是你要获取的属性的名称
+其中 descriptor 赋值后成为一个描述器，它也是一个对象，它的属性就是获取到的对象属性的标签
+
+
