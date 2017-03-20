@@ -366,4 +366,33 @@ var descriptor = Object.getOwnPropertyDescriptor(Object,'prototype')
 它有两个参数，Object是你要查看的对象的名称, 'prototype'是你要获取的属性的名称
 其中 descriptor 赋值后成为一个描述器，它也是一个对象，它的属性就是获取到的对象属性的标签
 
+#delete
+如果[用var定义]的[全局变量]或者是[局部变量]或者是[函数声明]或者是[函数内部的函数]都不能使用delete来删除，不是对象的属性
+比如:
+var globalVal = 1;
+delete globalVal; // false
+但是当是隐式的创建一个变量并赋值是可以被删除的： (但是不推荐)
+ohNo = 1;
+window.ohNo // 1;
+delete ohNo // true
+还有就是调用了eval()函数创造的变量是可以被delete删除的
+
+#propertyIsEnumerable()
+检测一个对象上的某一个属性是否是可枚举的
+如：cat.propertyIsEnumerable('legs') // true
+若不可枚举的属性则不会被for in 给遍历出来
+
+#Object.defineProperty(obj,'name',{})方法
+自定义对象的属性
+第一个参数是添加属性的对象
+第二个参数是属性的名字
+第三个参数是一个对象，可以设置一些标签，如{enumerable:false,value:1000}
+需要注意：我们自己用对象字面量和new Object创建的对象或者通过赋值去创建的属性的标签都是为true的
+如：obj.name = 4  ←这是可枚举的，可以被for in 遍历
+但是用这种方法定义的属性所有的标签都是false的
+
+#for in 可遍历原型链
+当我们只想遍历对象上的属性而不想遍历原型链上的属性，只要在for in 里面加上一个
+if(obj.hasOwnProperty(key))这个属性就可以了。
+
 
