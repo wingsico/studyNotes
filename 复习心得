@@ -395,4 +395,31 @@ delete ohNo // true
 当我们只想遍历对象上的属性而不想遍历原型链上的属性，只要在for in 里面加上一个
 if(obj.hasOwnProperty(key))这个属性就可以了。
 
+#属性getter/setter方法
+var man = {
+  name : 'Bosn',
+  weibo: '@Bosn',
+  get age(){
+    return new Date().getFullYear() - 1988;
+  },
+  set age(val){
+    console.log('Age can\'t be set to ' + val);
+  }
+}
+console.log(man.age)
+man.age = 100; // Age can't be set to 100
+console.log(man.age); //没变
 
+#get/set与原型链
+首先先创建一个函数foo
+function foo(){}
+通过Object.defineProperty()方法来设置它的一个属性
+Obejct.defineProperty(foo.prototype,'z',{get:function (){return 1;}});
+之后我们在通过new构造器来创建一个foo对象
+var obj = new foo();
+那么可以发现
+obj.z // 1
+obj.z = 10;
+obj.z // 还是1
+其中obj的z属性是不能被修改的
+那么我们要怎么样才能修改它呢
