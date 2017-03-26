@@ -1,0 +1,15 @@
+今天我们来先讲一个js中经常用到的一个东西————正则表达式
+基础知识在这一页过一下吧
+
+#创建正则
+- 字面量
+var reg = /pattern/flags;
+- 构造函数
+var reg = new RegExp('pattern','flags')
+
+#修饰符 flags - 只读
+g: global 全文搜索,不添加则只搜索第一个 默认false
+i: ignorCase 忽略大小写，默认大小写敏感 默认false
+m: multiline 多行匹配 默认false
+
+
