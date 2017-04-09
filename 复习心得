@@ -69,7 +69,7 @@ sort(方法函数)
 
 #DOM 方法
 nodeName 返回一个字符串，其内容是给定节点的名字
-nodeType 返回一个证书，这个数值代表给定节点的类型
+nodeType 返回一个整数，这个数值代表给定节点的类型
 nodeValue 返回给定节点的当前值
 childNodes 返回一个数组，这个数组由给定元素的节点的子节点构成
 firstChild 返回第一个子节点
