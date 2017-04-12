@@ -427,3 +427,13 @@ obj.z = 10;
 obj.z // 还是1
 其中obj的z属性是不能被修改的
 那么我们要怎么样才能修改它呢
+
+
+# filter()
+ var new_array = arr.filter(callback[, thisArg])
+ 
+callback
+    用来测试数组的每个元素的函数。调用时使用参数 (element, index, array)。
+    返回true表示保留该元素（通过测试），false则不保留。
+thisArg
+    可选。执行 callback 时的用于 this 的值。 
